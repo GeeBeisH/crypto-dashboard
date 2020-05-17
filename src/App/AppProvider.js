@@ -7,8 +7,31 @@ export class AppProvider extends Component {
 		super(props);
 		this.state = {
 			page: 'dashboard',
-			setPage: this.setPage
+			...this.savedSettings(),
+			setPage: this.setPage,
+			confirmFavorites: this.confirmFavorites
 		};
+	}
+
+	confirmFavorites = () => {
+		this.setState({
+			firstVisit: false,
+			page: 'dashboard'
+		});
+		localStorage.setItem(
+			'cryptoDash',
+			JSON.stringify({
+				test: 'Hello Test'
+			})
+		);
+	};
+
+	savedSettings() {
+		let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
+		if (!cryptoDashData) {
+			return { page: 'settings', firstVisit: true };
+		}
+		return {};
 	}
 
 	setPage = (page) => this.setState({ page });
