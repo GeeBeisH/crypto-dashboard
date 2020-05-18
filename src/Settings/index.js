@@ -7,8 +7,8 @@ import CoinGrid from './CoinGrid';
 export default function() {
 	return (
 		<Page name="settings">
-			<CoinGrid topSection />
 			<WelcomeMessage />
+			<CoinGrid topSection />
 			<ConfirmButton />
 			<CoinGrid />
 		</Page>
