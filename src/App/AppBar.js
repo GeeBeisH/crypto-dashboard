@@ -17,6 +17,7 @@ const ControlButtonElem = styled.div`
 		css`
 			text-shadow: 0px 0px 25px #03ff03;
 			color: teal;
+			-webkit-text-stroke: 0.5px #3a37ff;
 		`};
 `;
 
