@@ -9,8 +9,6 @@ export default function(props) {
 					return <div> Loading Coins </div>;
 				}
 				if (!firstVisit && !prices) {
-					console.log('Loading Prices');
-					console.log('LOADING PRICES');
 					return <div> Loading Prices </div>;
 				}
 				return <div>{props.children}</div>;

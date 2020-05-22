@@ -47,8 +47,6 @@ export class AppProvider extends Component {
 		for (let i = 0; i < this.state.favorites.length; i++) {
 			try {
 				let priceData = await cc.priceFull(this.state.favorites[i], 'USD');
-				console.log(this.state.favorites[i]);
-				console.log(priceData);
 				returnData.push(priceData);
 			} catch (e) {
 				console.warn('Fetch price error', e);
