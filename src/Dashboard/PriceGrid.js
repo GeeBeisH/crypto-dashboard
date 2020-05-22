@@ -14,7 +14,9 @@ export default function() {
 	return (
 		<AppContext.Consumer>
 			{({ prices }) => (
-				<PriceGrid>{prices.map((price, index) => <PriceTile index={index} price={price} />)}</PriceGrid>
+				<PriceGrid>
+					{prices.map((price, index) => <PriceTile key={index} index={index} price={price} />)}
+				</PriceGrid>
 			)}
 		</AppContext.Consumer>
 	);
