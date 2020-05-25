@@ -16,6 +16,7 @@ export class AppProvider extends Component {
 		this.state = {
 			page: 'dashboard',
 			favorites: [ 'BTC', 'ETH', 'XMR' ],
+			timeInterval: 'months',
 			...this.savedSettings(),
 			setPage: this.setPage,
 			addCoin: this.addCoin,
@@ -23,7 +24,8 @@ export class AppProvider extends Component {
 			isInFavorites: this.isInFavorites,
 			confirmFavorites: this.confirmFavorites,
 			setCurrentFavorite: this.setCurrentFavorite,
-			setFilteredCoins: this.setFilteredCoins
+			setFilteredCoins: this.setFilteredCoins,
+			changeChartSelect: this.changeChartSelect
 		};
 	}
 
@@ -53,7 +55,7 @@ export class AppProvider extends Component {
 			{
 				name: this.state.currentFavorite,
 				data: results.map((ticker, index) => [
-					moment().subtract({ months: TIME_UNITS - index }).valueOf(),
+					moment().subtract({ [this.state.timeInterval]: TIME_UNITS - index }).valueOf(),
 					ticker.USD
 				])
 			}
@@ -78,7 +80,11 @@ export class AppProvider extends Component {
 		let promises = [];
 		for (let units = TIME_UNITS; units > 0; units--) {
 			promises.push(
-				cc.priceHistorical(this.state.currentFavorite, [ 'USD' ], moment().subtract({ months: units }).toDate())
+				cc.priceHistorical(
+					this.state.currentFavorite,
+					[ 'USD' ],
+					moment().subtract({ [this.state.timeInterval]: units }).toDate()
+				)
 			);
 		}
 		return Promise.all(promises);
@@ -146,6 +152,10 @@ export class AppProvider extends Component {
 	setPage = (page) => this.setState({ page });
 
 	setFilteredCoins = (filteredCoins) => this.setState({ filteredCoins });
+
+	changeChartSelect = (value) => {
+		this.setState({ timeInterval: value, historical: null, hystorical: this.fetchHistorical() });
+	};
 
 	render() {
 		return <AppContext.Provider value={this.state}>{this.props.children}</AppContext.Provider>;
